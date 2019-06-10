@@ -1,0 +1,67 @@
+.App {
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #615550;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 5vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.opening-title {
+  font-size: 2em;
+  margin-bottom: 10%;
+}
+
+.stateParkButton {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  width: 20em;
+  height: 20em;
+  line-height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  background-image: -webkit-linear-gradient(45deg, #283048 0%, #859398 100%);
+  background-image: linear-gradient(45deg, #283048 0%, #859398 100%);
+  transition: 0.4s;
+  margin-top: -3%;
+}
+
+.stateParkButton:active {
+  -webkit-transform: rotate(10deg);
+  -ms-transform: rotate(10deg);
+  transform: rotate(10deg);
+  cursor: pointer;
+}
+
+.click-here-text {
+  font-size: 32px;
+}
