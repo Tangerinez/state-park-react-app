@@ -1,98 +1,81 @@
 import React from "react";
-import "./App.css";
-import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
-import data from "./data";
-/*
+import Axios from "axios";
+import ParkSearch from "./components/ParkSearch";
+import Alabama from "./components/Alabama";
+import ParkInfo from "./components/ParkInfo";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      showHomePage: true
+      parkData: [],
+      currentPark: [],
+      filter: [],
+      clicked: false
     };
-
-    this.handlePageChange = this.handlePageChange.bind(this);
+    this.getSinglePark = this.getSinglePark.bind(this);
+    this.handleOffClick = this.handleOffClick.bind(this);
+    this.filterParks = this.filterParks.bind(this);
   }
-
-  handlePageChange() {
-    this.setState({
-      showHomePage: false
+  componentDidMount() {
+    this.getAlabamaStateParks();
+  }
+  // Function that gets all park data from the database
+  getAlabamaStateParks() {
+    Axios.get("/parks").then(res => {
+      this.setState({
+        parkData: res.data,
+        filter: res.data
+      });
     });
   }
-
-  render() {
-    if (this.state.showHomePage) {
-      return <FindParkButton onClick={this.handlePageChange} />;
-    }
-
-    return <MapContainer />;
-  }
-}
-
-export default App;
-*/
-const mapStyles = {
-  width: "100%",
-  height: "100%"
-};
-
-class MapContainer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      parks: [
-        { latitude: 31.661389, longitude: -85.5075 },
-        { latitude: 34.473611, longitude: -86.053333 },
-        { latitude: 34.573333, longitude: -86.222222 },
-        { latitude: 33.474444, longitude: -85.809722 },
-        { latitude: 32.550833, longitude: -85.4775 },
-        { latitude: 34.548333, longitude: -85.59 },
-        { latitude: 31.314167, longitude: -86.272222 },
-        { latitude: 30.265278, longitude: -87.641111 },
-        { latitude: 34.791111, longitude: -87.379167 },
-        { latitude: 34.402778, longitude: -86.196389 },
-        { latitude: 33.298611, longitude: -87.677778 },
-        { latitude: 31.990833, longitude: -85.115 },
-        { latitude: 30.66973, longitude: -87.93604 },
-        { latitude: 34.731389, longitude: -86.504167 },
-        { latitude: 33.342778, longitude: -86.721111 },
-        { latitude: 33.8825, longitude: -86.8625 },
-        { latitude: 32.863056, longitude: -85.933889 }
-      ]
-    };
-  }
-
-  displayMarkers = () => {
-    return this.state.parks.map((store, index) => {
-      return (
-        <Marker
-          key={index}
-          id={index}
-          position={{
-            lat: store.latitude,
-            lng: store.longitude
-          }}
-          onClick={(...args) => console.log(...args)}
-        />
+  // Function that gets data for one park from the database, callback used to make sure the props are not one click behind
+  getSinglePark(id) {
+    Axios.get(`/parks/${id}`).then(res => {
+      this.setState(
+        {
+          currentPark: res.data,
+          clicked: true
+        },
+        () => console.log("one park", this.state.currentPark)
       );
     });
-  };
-
+  }
+  // Function to make the info div disappear on map click
+  handleOffClick() {
+    this.setState({
+      clicked: false
+    });
+  }
+  // Function to filter the data and return markers that match the name in the search bar
+  filterParks(parkFilter) {
+    let filteredParks = this.state.parkData;
+    filteredParks = filteredParks.filter(park => {
+      let parkName = park.name.toLowerCase();
+      return parkName.indexOf(parkFilter.toLowerCase()) !== -1;
+    });
+    this.setState({
+      filter: filteredParks
+    });
+  }
+  // Function to filter the data and return markers that match the activities in the search bar
   render() {
     return (
-      <Map
-        google={this.props.google}
-        zoom={8}
-        style={mapStyles}
-        initialCenter={{ lat: 32.3182, lng: -86.9023 }}
-      >
-        {this.displayMarkers()}
-      </Map>
+      <div>
+        <ParkSearch filter={this.state.filter} onChange={this.filterParks} />
+        <Alabama
+          parkData={this.state.parkData}
+          getOnePark={this.getSinglePark}
+          handleOffClick={this.handleOffClick}
+          filter={this.state.filter}
+        />
+        <ParkInfo
+          clicked={this.state.clicked}
+          currentPark={this.state.currentPark}
+        />
+      </div>
     );
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyDAonE5_rSGeAO4ZQkudybmgAhhNylh7pc"
-})(MapContainer);
+export default App;
