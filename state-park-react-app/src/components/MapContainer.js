@@ -1,5 +1,5 @@
 import React from "react";
-import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
+import { Map, InfoWindow, GoogleApiWrapper, Marker } from "google-maps-react";
 import SearchBar from "./SearchBar/SearchBar";
 
 const mapStyles = {
@@ -12,6 +12,9 @@ class MapContainer extends React.Component {
     super(props);
 
     this.state = {
+      activeMarker: {},
+      selectedPlace: {},
+      showingInfoWindow: false,
       parks: [
         {
           name: "Blue Springs State Park",
@@ -146,7 +149,8 @@ class MapContainer extends React.Component {
             lat: store.latitude,
             lng: store.longitude
           }}
-          onClick={(...args) => console.log(...args)}
+          onClick={this.onMarkerClick}
+          name={"Current Location"}
         />
       );
     });
@@ -154,8 +158,29 @@ class MapContainer extends React.Component {
 
   handleSearchInput(searchInput) {
     console.log("searching for:", searchInput);
-    // INCLUDE LOGIC HERE
+    console.log(this.state);
   }
+
+  onMarkerClick = (props, marker) =>
+    this.setState({
+      activeMarker: marker,
+      selectedPlace: props,
+      showingInfoWindow: true
+    });
+
+  onInfoWindowClose = () =>
+    this.setState({
+      activeMarker: null,
+      showingInfoWindow: false
+    });
+
+  onMapClicked = () => {
+    if (this.state.showingInfoWindow)
+      this.setState({
+        activeMarker: null,
+        showingInfoWindow: false
+      });
+  };
 
   render() {
     return (
@@ -167,7 +192,21 @@ class MapContainer extends React.Component {
           style={mapStyles}
           initialCenter={{ lat: 32.3182, lng: -86.9023 }}
         >
-          {this.displayMarkers()}
+          <Marker
+            name="Blue Springs State Park"
+            onClick={this.onMarkerClick}
+            position={{ lat: 31.661389, lng: -85.5075 }}
+          />
+          <Marker name="Current location" onClick={this.onMarkerClick} />
+          <InfoWindow
+            marker={this.state.activeMarker}
+            onClose={this.onInfoWindowClose}
+            visible={this.state.showingInfoWindow}
+          >
+            <div>
+              <h1>{this.state.selectedPlace.name}</h1>
+            </div>
+          </InfoWindow>
         </Map>
       </div>
     );
@@ -177,3 +216,4 @@ class MapContainer extends React.Component {
 export default GoogleApiWrapper({
   apiKey: "AIzaSyDAonE5_rSGeAO4ZQkudybmgAhhNylh7pc"
 })(MapContainer);
+// {this.displayMarkers()}
