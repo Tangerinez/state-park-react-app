@@ -26,6 +26,7 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div className="searchBar">
+        <div className="app-title">Alabama State Park Searcher!</div>
         <input
           type="text"
           className="input"
@@ -33,6 +34,7 @@ class SearchBar extends React.Component {
           onChange={this.handleChange}
           placeholder="Search..."
         />
+        <div />
       </div>
     );
   }

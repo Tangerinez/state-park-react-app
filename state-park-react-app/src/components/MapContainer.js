@@ -1,6 +1,6 @@
 import React from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar/SearchBar";
 
 const mapStyles = {
   width: "100%",
