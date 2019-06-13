@@ -8,7 +8,6 @@ class SearchBar extends React.Component {
     this.state = {
       searchInput: ""
     };
-
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -20,18 +19,25 @@ class SearchBar extends React.Component {
     this.props.handleSearchInput(event.currentTarget.value);
   }
 
+  resetSearch() {
+    this.setState({ searchInput: "" });
+  }
+
   render() {
     return (
       <div className="searchBar">
-        <div className="app-title">Alabama State Park Searcher!</div>
+        <div className="app-title">Alabama State Park Searcher</div>
         <input
           type="text"
-          className="input"
+          id="input"
           value={this.state.searchInput}
           onChange={this.handleChange}
           placeholder="Search..."
         />
         <div />
+        <button onClick={() => this.resetSearch()} className="reset-button">
+          RESET SEARCH
+        </button>
       </div>
     );
   }

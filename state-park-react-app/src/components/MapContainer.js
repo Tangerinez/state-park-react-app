@@ -1,6 +1,8 @@
 import React from "react";
 import { Map, InfoWindow, GoogleApiWrapper, Marker } from "google-maps-react";
 import SearchBar from "./SearchBar/SearchBar";
+import data from "./data";
+import "./MapContainer.css";
 
 const mapStyles = {
   width: "100%",
@@ -15,150 +17,12 @@ class MapContainer extends React.Component {
       activeMarker: {},
       selectedPlace: {},
       showingInfoWindow: false,
-      parks: [
-        {
-          name: "Blue Springs State Park",
-          address: "2595 AL-10, Clio, AL 36017",
-          hours: "8AM-7PM",
-          latitude: 31.661389,
-          longitude: -85.5075
-        },
-        {
-          name: "Buck's Pocket State Park",
-          address: "393 Co Rd 174, Grove Oak, AL 35975",
-          hours: "8AM-5PM",
-          latitude: 34.473611,
-          longitude: -86.053333
-        },
-        {
-          name: "Cathedral Caverns State Park",
-          address: "637 Cave Rd, Woodville, AL 35776",
-          hours: "9AM-5:30PM",
-          latitude: 34.573333,
-          longitude: -86.222222
-        },
-        {
-          name: "Cheaha State Park",
-          address: "19644 AL-281, Delta, AL 36258",
-          hours: "7AM-6PM",
-          latitude: 33.474444,
-          longitude: -85.809722
-        },
-        {
-          name: "Chewacla State Park",
-          address: "124 Shell Toomer Pkwy, Auburn, AL 36830",
-          hours: "8AM-8PM",
-          latitude: 32.550833,
-          longitude: -85.4775
-        },
-        {
-          name: "DeSoto State Park",
-          address: "7104 Desoto Pkwy NE, Fort Payne, AL 35967",
-          hours: "9AM-9PM",
-          latitude: 34.548333,
-          longitude: -85.59
-        },
-        {
-          name: "Frank Jackson State Park",
-          address: "100 Jerry Adams Dr, Opp, AL 36467",
-          hours: "7AM-9PM",
-          latitude: 31.314167,
-          longitude: -86.272222
-        },
-        {
-          name: "Gulf State Park",
-          address: "20115 AL-135, Gulf Shores, AL 36542",
-          hours: "24 hours",
-          latitude: 30.265278,
-          longitude: -87.641111
-        },
-        {
-          name: "Joe Wheeler State Park",
-          address: "4403 McLean Dr, Rogersville, AL 35652",
-          hours: "24 hours",
-          latitude: 34.791111,
-          longitude: -87.379167
-        },
-        {
-          name: "Lake Guntersville State Park",
-          address: "1155 Lodge Dr, Guntersville, AL 35976",
-          hours: "24 hours",
-          latitude: 34.402778,
-          longitude: -86.196389
-        },
-        {
-          name: "Lake Lurleen State Park",
-          address: "13226 Lake Lurleen Rd, Coker, AL 35452",
-          hours: "24 hours",
-          latitude: 33.298611,
-          longitude: -87.677778
-        },
-        {
-          name: "Lakepoint State Park",
-          address: "104 Old Hwy 165, Eufaula, AL 36027",
-          hours: "8AM-4:30PM",
-          latitude: 31.990833,
-          longitude: -85.115
-        },
-        {
-          name: "Meaher State Park",
-          address: "5200 Battleship Pkwy, Spanish Fort, AL 36527",
-          hours: "24 hours",
-          latitude: 30.66973,
-          longitude: -87.93604
-        },
-        {
-          name: "Monte Sano State Park",
-          address: "5105 Nolen Ave SE, Huntsville, AL 35801",
-          hours: "7AM-6PM",
-          latitude: 34.731389,
-          longitude: -86.504167
-        },
-        {
-          name: "Oak Mountain State Park",
-          address: "200 Terrace Dr, Pelham, AL 35124",
-          hours: "7AM-7PM",
-          latitude: 33.342778,
-          longitude: -86.721111
-        },
-        {
-          name: "Rickwood Caverns State Park",
-          address: "370 Rickwood Park Rd, Warrior, AL 35180",
-          hours: "8AM-5PM",
-          latitude: 33.8825,
-          longitude: -86.8625
-        },
-        {
-          name: "Wind Creek State Park",
-          address: "4325 AL-128, Alexander City, AL 35010",
-          hours: "7AM-12AM",
-          latitude: 32.863056,
-          longitude: -85.933889
-        }
-      ]
+      parks: data
     };
   }
 
-  displayMarkers = () => {
-    return this.state.parks.map((store, index) => {
-      return (
-        <Marker
-          key={index}
-          id={index}
-          position={{
-            lat: store.latitude,
-            lng: store.longitude
-          }}
-          onClick={this.onMarkerClick}
-          name={"Current Location"}
-        />
-      );
-    });
-  };
-
   handleSearchInput(searchInput) {
     console.log("searching for:", searchInput);
-    console.log(this.state);
   }
 
   onMarkerClick = (props, marker) =>
@@ -193,18 +57,133 @@ class MapContainer extends React.Component {
           initialCenter={{ lat: 32.3182, lng: -86.9023 }}
         >
           <Marker
-            name="Blue Springs State Park"
+            name={data[0].name}
+            address={data[0].address}
+            hours={data[0].hours}
             onClick={this.onMarkerClick}
-            position={{ lat: 31.661389, lng: -85.5075 }}
+            position={{ lat: data[0].latitude, lng: data[0].longitude }}
           />
-          <Marker name="Current location" onClick={this.onMarkerClick} />
+          <Marker
+            name={data[1].name}
+            address={data[1].address}
+            hours={data[1].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[1].latitude, lng: data[1].longitude }}
+          />
+          <Marker
+            name={data[2].name}
+            address={data[2].address}
+            hours={data[2].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[2].latitude, lng: data[1].longitude }}
+          />
+          <Marker
+            name={data[3].name}
+            address={data[3].address}
+            hours={data[3].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[3].latitude, lng: data[3].longitude }}
+          />
+          <Marker
+            name={data[4].name}
+            address={data[4].address}
+            hours={data[4].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[4].latitude, lng: data[4].longitude }}
+          />
+          <Marker
+            name={data[5].name}
+            address={data[5].address}
+            hours={data[5].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[5].latitude, lng: data[5].longitude }}
+          />
+          <Marker
+            name={data[6].name}
+            address={data[6].address}
+            hours={data[6].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[6].latitude, lng: data[6].longitude }}
+          />
+          <Marker
+            name={data[7].name}
+            address={data[7].address}
+            hours={data[7].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[7].latitude, lng: data[7].longitude }}
+          />
+          <Marker
+            name={data[8].name}
+            address={data[8].address}
+            hours={data[8].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[8].latitude, lng: data[8].longitude }}
+          />
+          <Marker
+            name={data[9].name}
+            address={data[9].address}
+            hours={data[9].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[9].latitude, lng: data[9].longitude }}
+          />
+          <Marker
+            name={data[10].name}
+            address={data[10].address}
+            hours={data[10].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[10].latitude, lng: data[10].longitude }}
+          />
+          <Marker
+            name={data[11].name}
+            address={data[11].address}
+            hours={data[11].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[11].latitude, lng: data[11].longitude }}
+          />
+          <Marker
+            name={data[12].name}
+            address={data[12].address}
+            hours={data[12].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[12].latitude, lng: data[12].longitude }}
+          />
+          <Marker
+            name={data[13].name}
+            address={data[13].address}
+            hours={data[13].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[13].latitude, lng: data[13].longitude }}
+          />
+          <Marker
+            name={data[14].name}
+            address={data[14].address}
+            hours={data[14].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[14].latitude, lng: data[14].longitude }}
+          />
+          <Marker
+            name={data[15].name}
+            address={data[15].address}
+            hours={data[15].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[15].latitude, lng: data[15].longitude }}
+          />
+          <Marker
+            name={data[16].name}
+            address={data[16].address}
+            hours={data[16].hours}
+            onClick={this.onMarkerClick}
+            position={{ lat: data[16].latitude, lng: data[16].longitude }}
+          />
           <InfoWindow
             marker={this.state.activeMarker}
             onClose={this.onInfoWindowClose}
             visible={this.state.showingInfoWindow}
           >
-            <div>
-              <h1>{this.state.selectedPlace.name}</h1>
+            <div className="info-window">
+              <h2>{this.state.selectedPlace.name}</h2>
+              <h4>Address: {this.state.selectedPlace.address}</h4>
+              <h4>Hours: {this.state.selectedPlace.hours}</h4>
             </div>
           </InfoWindow>
         </Map>
@@ -216,4 +195,3 @@ class MapContainer extends React.Component {
 export default GoogleApiWrapper({
   apiKey: "AIzaSyDAonE5_rSGeAO4ZQkudybmgAhhNylh7pc"
 })(MapContainer);
-// {this.displayMarkers()}
