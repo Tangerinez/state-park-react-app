@@ -1,18 +1,38 @@
 import React from "react";
+import "./SearchBar.css";
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
+    // this.state = {
+    //   filtered: []
+    // };
+
     this.state = {
-      filtered: []
+      searchInput: ""
     };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      searchInput: event.currentTarget.value
+    });
+
+    this.props.handleSearchInput(event.currentTarget.value);
   }
 
   render() {
     return (
-      <div>
-        <input type="text" className="input" placeholder="Search..." />
-        <ul>Search Bar is above!</ul>
+      <div className="searchBar">
+        <input
+          type="text"
+          className="input"
+          value={this.state.searchInput}
+          onChange={this.handleChange}
+          placeholder="Search..."
+        />
       </div>
     );
   }

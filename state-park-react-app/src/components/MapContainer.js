@@ -152,12 +152,15 @@ class MapContainer extends React.Component {
     });
   };
 
-  handleSearchInput(searchInput) {}
+  handleSearchInput(searchInput) {
+    console.log("searching for:", searchInput);
+    // INCLUDE LOGIC HERE
+  }
 
   render() {
     return (
       <div>
-        <SearchBar />
+        <SearchBar handleSearchInput={this.handleSearchInput} />
         <Map
           google={this.props.google}
           zoom={8}
