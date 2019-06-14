@@ -17,6 +17,7 @@ KNOWN BUGS:
 - Currently, the filtered list does NOT work. The intent is to have the user click on a state park in the filtered list, and for
 the list to zoom in on that state park's location.
 - Some spacing issues with text elements 
+- Positioning of filtered list is only good for one viewport size - need time to fix positioning of that element.
 - The filtered list currently displays all of the state parks if the user inputs a value, and then deletes all of his/her inputs.
 However, the reset button does eliminate this problem.
 
