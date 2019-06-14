@@ -19,10 +19,24 @@ class MapContainer extends React.Component {
       showingInfoWindow: false,
       parks: data
     };
+    this.handleSearchInput = this.handleSearchInput.bind(this);
   }
 
   handleSearchInput(searchInput) {
-    console.log("searching for:", searchInput);
+    document.getElementById("myUL").innerHTML = "";
+    let filteredParks = [];
+    let domList = document.getElementById("myUL");
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].name.includes(searchInput) === true) {
+        filteredParks.push(data[i].name);
+        let addListItem = document.createElement("li");
+        addListItem.appendChild(document.createTextNode(data[i].name));
+        domList.appendChild(addListItem);
+      }
+    }
+
+    this.setState({ parks: filteredParks });
+    console.log(filteredParks);
   }
 
   onMarkerClick = (props, marker) =>
@@ -45,11 +59,24 @@ class MapContainer extends React.Component {
         showingInfoWindow: false
       });
   };
-
+  /*
+  generateMarkers() {
+    this.state.parks.map(park => (
+      <Marker
+        name={park[0].name}
+        address={park[1].address}
+        hours={park[2].hours}
+        onClick={this.onMarkerClick}
+        position={{ lat: park[3].latitude, lng: park[4].longitude }}
+      />
+    ));
+  }
+  */
   render() {
     return (
       <div>
         <SearchBar handleSearchInput={this.handleSearchInput} />
+        <ul id="myUL" />
         <Map
           google={this.props.google}
           zoom={8}
