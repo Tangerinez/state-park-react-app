@@ -21,6 +21,7 @@ class SearchBar extends React.Component {
 
   resetSearch() {
     this.setState({ searchInput: "" });
+    document.getElementById("myUL").innerHTML = "";
   }
 
   render() {

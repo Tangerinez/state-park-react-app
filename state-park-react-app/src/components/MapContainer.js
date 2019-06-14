@@ -22,15 +22,35 @@ class MapContainer extends React.Component {
     this.handleSearchInput = this.handleSearchInput.bind(this);
   }
 
+  zoomInOnMap(stateParkName) {
+    for (var i = 0; i < data.length; i++) {
+      if (stateParkName === data[i].name) {
+        console.log("Hello");
+        return (
+          <Map
+            google={this.props.google}
+            zoom={12}
+            style={mapStyles}
+            initialCenter={{ lat: data[i].latitude, lng: data[i].longitude }}
+          />
+        );
+      }
+    }
+  }
+
   handleSearchInput(searchInput) {
     document.getElementById("myUL").innerHTML = "";
     let filteredParks = [];
     let domList = document.getElementById("myUL");
     for (var i = 0; i < data.length; i++) {
-      if (data[i].name.includes(searchInput) === true) {
-        filteredParks.push(data[i].name);
+      const parkName = data[i].name;
+      if (parkName.toLowerCase().includes(searchInput.toLowerCase()) === true) {
+        filteredParks.push(parkName);
+
         let addListItem = document.createElement("li");
-        addListItem.appendChild(document.createTextNode(data[i].name));
+        addListItem.setAttribute("id", "park" + i);
+        addListItem.appendChild(document.createTextNode(parkName));
+        addListItem.addEventListener("click", this.zoomInOnMap(parkName));
         domList.appendChild(addListItem);
       }
     }
@@ -74,7 +94,7 @@ class MapContainer extends React.Component {
   */
   render() {
     return (
-      <div>
+      <div className="component-container">
         <SearchBar handleSearchInput={this.handleSearchInput} />
         <ul id="myUL" />
         <Map

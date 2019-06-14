@@ -22,9 +22,15 @@ ul {
   font-size: 18px;
   color: black;
   display: block;
+  width: 25%;
+  margin: 0 auto;
 }
 
 #myUL li:hover:not(.header) {
   background-color: #eee;
   cursor: pointer;
+}
+
+.component-container {
+  background-color: #fa7268;
 }
