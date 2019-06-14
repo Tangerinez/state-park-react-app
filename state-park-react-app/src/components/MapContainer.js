@@ -22,10 +22,10 @@ class MapContainer extends React.Component {
     this.handleSearchInput = this.handleSearchInput.bind(this);
   }
 
+  // This function was supposed to zoom in on a particular marker at the state park's location //
   zoomInOnMap(stateParkName) {
     for (var i = 0; i < data.length; i++) {
       if (stateParkName === data[i].name) {
-        console.log("Hello");
         return (
           <Map
             google={this.props.google}
@@ -37,7 +37,7 @@ class MapContainer extends React.Component {
       }
     }
   }
-
+  // Capture's user's input and creates a filtered list
   handleSearchInput(searchInput) {
     document.getElementById("myUL").innerHTML = "";
     let filteredParks = [];
@@ -56,22 +56,21 @@ class MapContainer extends React.Component {
     }
 
     this.setState({ parks: filteredParks });
-    console.log(filteredParks);
   }
-
+  // Changes state so that marker window pops up
   onMarkerClick = (props, marker) =>
     this.setState({
       activeMarker: marker,
       selectedPlace: props,
       showingInfoWindow: true
     });
-
+  // Changes state so that marker window disappears
   onInfoWindowClose = () =>
     this.setState({
       activeMarker: null,
       showingInfoWindow: false
     });
-
+  // Changes state so that marker window disappears
   onMapClicked = () => {
     if (this.state.showingInfoWindow)
       this.setState({
@@ -79,6 +78,7 @@ class MapContainer extends React.Component {
         showingInfoWindow: false
       });
   };
+  // This function was supposed to make generating the Markers more dry, instead of having to create a Marker individually for every state park
   /*
   generateMarkers() {
     this.state.parks.map(park => (
@@ -96,10 +96,29 @@ class MapContainer extends React.Component {
     return (
       <div className="component-container">
         <SearchBar handleSearchInput={this.handleSearchInput} />
+        <div className="matches-title">Matching State Parks</div>
+        <div className="instruction-container">
+          <h1 className="instruction-title">Instructions</h1>
+          <ol className="instructions">
+            <li>
+              Type a search query into the search bar to see existing state
+              parks in Alabama
+            </li>
+            <li>
+              Markers are clickable and will display information about the state
+              park
+            </li>
+            <li>
+              Clicking on a filtered search item will zoom directly to that
+              marker on the map (not functional yet)
+            </li>
+          </ol>
+        </div>
         <ul id="myUL" />
+
         <Map
           google={this.props.google}
-          zoom={8}
+          zoom={7.5}
           style={mapStyles}
           initialCenter={{ lat: 32.3182, lng: -86.9023 }}
         >

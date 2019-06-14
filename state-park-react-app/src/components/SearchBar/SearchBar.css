@@ -6,15 +6,27 @@
   text-align: center;
 }
 
+.below-search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 #input {
   height: 25%;
   font-size: 1em;
+  width: 15%;
+  margin: 0 auto;
 }
 
 .app-title {
   font-size: 24px;
+  float: left;
+  font-weight: bold;
+  margin-left: 2%;
 }
 
 .reset-button {
   font-size: 0.5em;
+  width: 12%;
 }
